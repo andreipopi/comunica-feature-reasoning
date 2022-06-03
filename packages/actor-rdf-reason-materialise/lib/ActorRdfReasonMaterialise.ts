@@ -48,7 +48,7 @@ export class ActorRdfReasonMaterialise extends ActorRdfReason {
     return this.explicitQuadSource(setUnionSource(context));
   }
 
-  public constructor(args: IActorRdfReasonArgs) {
+  public constructor(args: IActorRdfReasonMaterialiseArgs) {
     super(args);
   }
   public async test(action: IActionRdfReason): Promise<IActorTest> {
@@ -87,6 +87,17 @@ export class ActorRdfReasonMaterialise extends ActorRdfReason {
     };
     return reasoningStatus;
   }
+}
+
+export interface IActorRdfReasonMaterialiseArgs extends IActorRdfReasonArgs {
+  mediatorRdfUpdateQuads: MediatorRdfUpdateQuads;
+
+  mediatorRdfResolveQuadPattern: MediatorRdfResolveQuadPattern;
+
+  mediatorRuleResolve: MediatorRuleResolve;
+
+  mediatorOptimizeRule: MediatorOptimizeRule;
+
 }
 
 export interface IActionRdfReasonExecute extends IActionRdfReason {
