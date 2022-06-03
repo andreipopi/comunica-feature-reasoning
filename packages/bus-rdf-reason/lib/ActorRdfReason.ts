@@ -16,6 +16,7 @@ export function implicitDatasetFactory(context: IActionContext): IDataSource & I
   return datasetFactory();
 }
 
+
 export function implicitGroupFactory(context: IActionContext): IReasonGroup {
   return {
     dataset: implicitDatasetFactory(context),

@@ -7,8 +7,8 @@ import type * as RDF from '@rdfjs/types';
 import type { AsyncIterator } from 'asynciterator';
 import { single, UnionIterator } from 'asynciterator';
 import { promisifyEventEmitter } from 'event-emitter-promisify';
-import { Store } from 'n3';
-import { forEachTerms, mapTerms } from 'rdf-terms';
+import { DefaultGraph, Store } from 'n3';
+import { forEachTerms, getDefaultGraphs, mapTerms } from 'rdf-terms';
 import type { Algebra } from 'sparqlalgebrajs';
 
 /**
@@ -18,7 +18,7 @@ export class ActorRdfReasonRuleRestriction extends ActorRdfReasonMediated {
   public constructor(args: IActorRdfReasonRuleRestrictionArgs) {
     super(args);
   }
-
+  // 
   public async test(action: IActionRdfReason): Promise<IActorTest> {
     if (!action.context.has(KeysRdfReason.data) || !action.context.has(KeysRdfReason.rules)) {
       throw new Error('Missing dataset or rule context');
@@ -27,16 +27,25 @@ export class ActorRdfReasonRuleRestriction extends ActorRdfReasonMediated {
   }
 
   public async execute(action: IActionRdfReasonExecute): Promise<void> {
+  
     const { context, rules } = action;
     const store = new Store();
     let size = 0;
+
+    console.log("data is about to be fetched");
     do {
       size = store.size;
       // TODO: Handle rule assertions better
+      
       const quadStreamInsert = evaluateRuleSet(<any> rules, this.unionQuadSource(context).match);
+      
       const { execute } = await this.runImplicitUpdate({ quadStreamInsert: quadStreamInsert.clone(), context });
+      
       await Promise.all([ execute(), await promisifyEventEmitter(store.import(quadStreamInsert.clone())) ]);
     } while (store.size > size);
+
+    console.log("data has been fetched");
+   // console.log("quads in store", store.match(null,null,null,null));
   }
 }
 
@@ -109,6 +118,7 @@ AsyncIterator<RDF.Quad> {
     ),
     { autoStart: false },
   ));
+
   return new UnionIterator(iterators, { autoStart: false });
 }
 

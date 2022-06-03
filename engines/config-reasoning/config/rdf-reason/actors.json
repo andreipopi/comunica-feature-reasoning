@@ -1,14 +1,15 @@
 {
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^2.0.0/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-reason-rule-restriction/^0.0.0/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-reason-materialise/^1.0.0/components/context.jsonld"
+    
   ],
   "@id": "urn:comunica:default:Runner",
   "@type": "Runner",
   "actors": [
     {
-      "@id": "urn:comunica:default:rdf-reason/actors#rule-restriction",
-      "@type": "ActorRdfReasonRuleRestriction",
+      "@id": "urn:comunica:default:rdf-reason/actors#materialise",
+      "@type": "ActorRdfReasonMaterialise",
       "mediatorRdfUpdateQuads": { "@id": "urn:comunica:default:rdf-update-quads/mediators#main" },
       "mediatorRdfResolveQuadPattern": { "@id": "urn:comunica:default:rdf-resolve-quad-pattern/mediators#main" },
       "mediatorRuleResolve": { "@id": "urn:comunica:default:rule-resolve/mediators#main" },

@@ -8,7 +8,7 @@ import type { IActorArgs, IActorTest } from '@comunica/core';
 import type { Rule, IReasonStatus } from '@comunica/reasoning-types';
 import type { IActionContext } from '@comunica/types';
 import type * as RDF from '@rdfjs/types';
-import { wrap, type AsyncIterator } from 'asynciterator';
+import { wrap, AsyncIterator } from 'asynciterator';
 import { everyTerms } from 'rdf-terms';
 import type { Algebra } from 'sparqlalgebrajs';
 import type { IActionRdfReason, IActorRdfReasonOutput } from './ActorRdfReason';
@@ -47,11 +47,13 @@ export abstract class ActorRdfReasonMediated extends ActorRdfReason {
     };
   }
 
+  
+  //
   // TODO: See if we need to add this back in
   // protected implicitQuadSource(context: IActionContext): {
   //   match: (pattern: Algebra.Pattern) => AsyncIterator<RDF.Quad>
   // } {
-  //   return this.explicitQuadSource(setImplicitSource(context));
+  //   return this.QuadSource(setImplicitSource(context));
   // }
 
   protected unionQuadSource(context: IActionContext): { match: (pattern: Algebra.Pattern) => AsyncIterator<RDF.Quad> } {
@@ -67,17 +69,19 @@ export abstract class ActorRdfReasonMediated extends ActorRdfReason {
     };
     return wrap<Rule>(getRules());
   }
-
   public async run(action: IActionRdfReason): Promise<IActorRdfReasonOutput> {
     return {
       execute: async(): Promise<void> => {
         const { updates, pattern } = action;
+        
+
         if (updates) {
           // If there is an update - forget everything we know about the current status of reasoning
           setReasoningStatus(action.context, { type: 'full', reasoned: false });
         }
 
         const { status } = getSafeData(action.context);
+
 
         // If full reasoning is already being applied then just use the data from that
         if (status.type === 'full' && status.reasoned) {
@@ -134,11 +138,13 @@ export abstract class ActorRdfReasonMediated extends ActorRdfReason {
     };
   }
 
+  // this method is not implemented by the abstract class
   public abstract execute(action: IActionRdfReasonExecute): Promise<void>;
 }
 
 export interface IActionRdfReasonExecute extends IActionRdfReason {
   rules: Rule[];
+  
 }
 
 export interface IActorRdfReasonMediatedArgs
