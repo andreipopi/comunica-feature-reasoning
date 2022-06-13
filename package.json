@@ -72,6 +72,7 @@
     "tslint-eslint-rules": "^5.4.0",
     "typedoc": "^0.21.0",
     "typescript": "^4.6.3"
+    
   },
   "pre-commit": [
     "depcheck",
@@ -115,12 +116,15 @@
     "test-ci": "jest --ci --maxWorkers=4 --coverage",
     "lint": "eslint . --ext .ts --cache",
     "clean": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules",
+  
+
     "build": "yarn run build:ts && yarn run build:components",
     "build:ts": "tsc",
     "build:components": "lerna exec -- npm run build:components --if-present",
     "build-watch": "nodemon -e ts --ignore '*.d.ts' --exec yarn run build",
     "build-watch:ts": "tsc --watch",
     "build-watch:components": "nodemon -e d.ts --exec yarn run build:components",
+
     "publish": "yarn run build",
     "publish-release": "lerna publish",
     "publish-bare": "lerna exec -- npm publish --silent",

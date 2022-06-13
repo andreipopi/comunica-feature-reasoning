@@ -40,6 +40,7 @@ export class ActorRdfReasonRuleRestriction extends ActorRdfReasonMediated {
   }
 }
 
+
 interface IActorRdfReasonRuleRestrictionArgs extends IActorRdfReasonMediatedArgs {
 }
 

@@ -146,6 +146,7 @@
     "@comunica/actor-rdf-parse-rdfxml": "^2.0.1",
     "@comunica/actor-rdf-parse-xml-rdfa": "^2.0.1",
     "@comunica/actor-rdf-reason-rule-restriction": "0.0.0",
+    "@comunica/actor-rdf-reason-materialise": "1.0.0",
     "@comunica/actor-rdf-resolve-hypermedia-links-next": "^2.0.1",
     "@comunica/actor-rdf-resolve-hypermedia-links-queue-fifo": "^2.0.1",
     "@comunica/actor-rdf-resolve-hypermedia-none": "^2.0.1",
